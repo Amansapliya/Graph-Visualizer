@@ -1,19 +1,6 @@
-//Things to do:
-// Add more algorithms (research)
-	// Bidirectional depth first search
-	// Bidirectional A*?
-	// Bidirectional breadth first search
-// Add more maze creation functions
-	// Do pure horizontal and pure vertical maze
-	// Do spiral maze from middle?
-/* ------------------------------------ */
-/* ---- Var Declarations & Preamble---- */
-/* ------------------------------------ */
-
 var totalRows = 25;
 var totalCols = 40;
 var inProgress = false;
-//var initialMessage = "Click or drag cells to build walls! Press start when you finish and have selected an algorithm!";
 var cellsToAnimate = [];
 var createWalls = false;
 var algorithm = null;
@@ -40,10 +27,6 @@ function generateGrid( rows, cols ) {
 
 var myGrid = generateGrid( totalRows, totalCols);
 $( "#tableContainer" ).append( myGrid );
-
-/* --------------------------- */
-/* --- OBJECT DECLARATIONS --- */
-/* --------------------------- */
 
 function Queue() { 
  this.stack = new Array();
@@ -130,10 +113,6 @@ function minHeap() {
 	}
 }
 
-/* ------------------------- */
-/* ---- MOUSE FUNCTIONS ---- */
-/* ------------------------- */
-
 $( "td" ).mousedown(function(){
 	var index = $( "td" ).index( this );
 	var startCellIndex = (startCell[0] * (totalCols)) + startCell[1];
@@ -202,10 +181,6 @@ $( "body" ).mouseup(function(){
 	movingEnd = false;
 });
 
-/* ----------------- */
-/* ---- BUTTONS ---- */
-/* ----------------- */
-
 $( "#startBtn" ).click(function(){
     if ( algorithm == null ){ return;}
     if ( inProgress ){ update("wait"); return; }
@@ -217,10 +192,6 @@ $( "#clearBtn" ).click(function(){
 	clearBoard(keepWalls = false);
 });
 
-
-/* --------------------- */
-/* --- NAV BAR MENUS --- */
-/* --------------------- */
 
 $( "#algorithms .dropdown-item").click(function(){
 	if ( inProgress ){ update("wait"); return; }
@@ -252,10 +223,6 @@ $( "#mazes .dropdown-item").click(function(){
 	}
 	console.log("Maze has been changd to: " + maze);
 });
-
-/* ----------------- */
-/* --- FUNCTIONS --- */
-/* ----------------- */
 
 function moveStartOrEnd(prevIndex, newIndex, startOrEnd){
 	var newCellY = newIndex % totalCols;
@@ -426,7 +393,6 @@ function cellIsAWall(i, j, cells){
 	return $(cells[cellNum]).hasClass("wall");
 }
 
-// Make it iterable?
 function DFS(i, j, visited){
 	if (i == endCell[0] && j == endCell[1]){
 		cellsToAnimate.push( [[i, j], "success"] );
@@ -451,7 +417,7 @@ function DFS(i, j, visited){
 }
 
 
-// NEED TO REFACTOR AND MAKE LESS LONG
+
 function BFS(){
 	var pathFound = false;
 	var myQueue = new Queue();
@@ -853,7 +819,7 @@ function greedyBestFirstSearch() {
 			}
 		}
 	}
-	// Make any nodes still in the heap "visited"
+	
 	while ( !myHeap.isEmpty() ){
 		var cell = myHeap.getMin();
 		var i = cell[1][0];
@@ -862,7 +828,7 @@ function greedyBestFirstSearch() {
 		visited[i][j] = true;
 		cellsToAnimate.push( [[i, j], "visited"] );
 	}
-	// If a path was found, illuminate it
+	
 	if (pathFound) {
 		var i = endCell[0];
 		var j = endCell[1];
